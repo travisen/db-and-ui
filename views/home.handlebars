@@ -1,1 +1,56 @@
-<h1>Hello! homepage is up!</h1>
+<div class ="container">
+	<h1>Workout Tracker App</h1>
+	<h5>Insert New Workout</h5>
+	<form>
+		<div class="row">
+			<div class="eight columns">
+				<label>Exercise Name</label>
+				<input class="u-full-width" type="text" placeholder="Squats" id="ex-name">
+			</div>
+		</div>
+		<div class="row">
+			<div class="eight columns">
+				<label>Date Performed</label>
+				<input class="u-full-width" type="date" placeholder="Squats" id="ex-date">
+			</div>
+		</div>
+		<div class="row">
+			<div class="three columns">
+				<label>Reps</label>
+				<input class="u-full-width" type="number" min="0" step="1" placeholder="5" id="ex-reps"/>
+			</div>
+			<div class="three columns">
+				<label>Weight</label>
+				<input class="u-full-width" type="number" min="0" step="1" placeholder="100" id="ex-weight">
+			</div>
+			<div class="three columns">
+				<label>Weight Type</label>
+					<label class="weight-type-lbs">
+						<input type="radio"  id="lbs-true">
+	   		 			<span class="label-body">lbs</span>
+					</label>
+					<label class="weight-type-kgs">
+						<input type="radio"  id="kgs-true">
+						<span class="label-body">kgs</span>
+					</label>
+			</div>
+		</div>
+	</form>
+
+	<h5 style="margin-bottom: 0rem">Workout Log</h5>
+	<table class="u-half-width">
+		<thead>
+			<tr>
+				<th>Exercise Name</th>
+				<th>Repetitions</th>
+				<th>Weight</th>
+				<th>Weight Type</th>
+				<th>Date</th>
+			</tr>
+		</thead> 
+		<!--Dynamic data starts here -->
+		<tbody class="tbl-body">
+		</tbody>
+	</table>
+
+</div>
