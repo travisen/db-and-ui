@@ -11,8 +11,12 @@ app.use(express.static('public'));
 
 app.get('/',function(req,res){
   res.render('home');
+  //document.addEventListener('DOMContentLoaded', bindButtons);
 });
 
+app.get('/add-ex', function(req,res){
+	res.render('home');
+});
 
 app.use(function(req,res){
   res.status(404);
