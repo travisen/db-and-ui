@@ -18,6 +18,21 @@ app.get('/add-ex', function(req,res){
 	res.render('home');
 });
 
+app.get('/reset-table',function(req,res,next){
+  var context = {};
+  mysql.pool.query("DROP TABLE IF EXISTS todo", function(err){
+    var createString = "CREATE TABLE todo(" +
+    "id INT PRIMARY KEY AUTO_INCREMENT," +
+    "name VARCHAR(255) NOT NULL," +
+    "done BOOLEAN," +
+    "due DATE)";
+    mysql.pool.query(createString, function(err){
+      context.results = "Table reset";
+      res.render('home',context);
+    })
+  });
+});
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');
