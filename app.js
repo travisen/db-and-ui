@@ -1,14 +1,5 @@
 var express = require('express');
-//var mysql = require('./dbcred.js');
-
-var mysql = require('mysql');
-var pool = mysql.createPool({
-  connectionLimit : 10,
-  host            : 'localhost',
-  user            : 'root',
-  password        : 'default',
-  database        : 'workouts'
-});
+var mysql = require('./dbcred.js');
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -29,7 +20,7 @@ app.get('/add-ex', function(req,res){
 
 app.get('/reset-table',function(req,res,next){
   var context = {};
-  pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
+  mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
     var createString = "CREATE TABLE workouts("+
     "id INT PRIMARY KEY AUTO_INCREMENT,"+
     "name VARCHAR(255) NOT NULL,"+
@@ -37,7 +28,7 @@ app.get('/reset-table',function(req,res,next){
     "weight INT,"+
     "date DATE,"+
     "lbs BOOLEAN)";
-    pool.query(createString, function(err){
+    mysql.pool.query(createString, function(err){
       context.results = "Table reset";
       res.render('home',context);
     })
