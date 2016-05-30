@@ -16,6 +16,8 @@ function addElement () {
 */
 
 function bindButtons(){
+
+	/*submit data button*/
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();
 		var payload = {};
@@ -32,7 +34,7 @@ function bindButtons(){
 		//newCell.appendChild(newText);
 
 		payload = document.getElementById('ex-name').value;
-		console.log(payload);
+		//console.log(payload);
 		req.open("POST", "http://httpbin.org/post", true);
 
 		req.setRequestHeader('Content-Type', 'application/json');
@@ -51,6 +53,12 @@ function bindButtons(){
 
 	    req.send(payload);
 	    event.preventDefault();
+	});
+	/*end submit data button*/
+
+	/* reset table button */
+	document.getElementById("ex-reset").addEventListener('click', function(event){
+
 	});
 }
 /*
