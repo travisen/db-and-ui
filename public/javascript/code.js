@@ -49,7 +49,7 @@ function bindButtons(){
 			}
 		});
 
-	    req.send(JSON.stringify(payload));
+	    req.send(payload);
 	    event.preventDefault();
 	});
 }
