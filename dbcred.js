@@ -6,5 +6,5 @@ var pool = mysql.createPool({
   password        : 'default',
   database        : 'workouts'
 });
-
+console.log("im running");
 module.exports.pool = pool;
