@@ -1,5 +1,14 @@
 var express = require('express');
-var mysql = require('./dbcred.js');
+//var mysql = require('./dbcred.js');
+
+var mysql = require('mysql');
+var pool = mysql.createPool({
+  connectionLimit : 10,
+  host            : 'localhost',
+  user            : 'root',
+  password        : 'default',
+  database        : 'workouts'
+});
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
