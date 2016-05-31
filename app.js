@@ -23,12 +23,11 @@ app.post('/get-row',function(req,res){
     postParameters.push({'key':q, 'value':req.body[q]})
   }
   console.log("server data", postParameters);
-
-  var test = {name: "lunges"};
+  // fix date
+  var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
   mysql.pool.query('INSERT INTO workouts SET ?', test, function(err,res){
     if(err) throw err;
 
-   // console.log('last insert ID:', res.)
   });
 
   /* figure this out one i can insert values manually
