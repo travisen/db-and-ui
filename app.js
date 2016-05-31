@@ -1,5 +1,6 @@
 var express = require('express');
 var mysql = require('./dbcred.js');
+var bodyParser = require('body-parser'); //to handle post requests
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -7,7 +8,28 @@ var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', 3009);
+
 app.use(express.static('public'));
+
+// allows parsing of requests sent to this server from a client
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// handles data sent from client
+app.post('/get-row',function(req,res){
+  //console.log("hello");
+  var postParameters = [];
+  for(var q in req.body){
+    postParameters.push({'key':q, 'value':req.body[q]})
+  }
+  console.log("server data", postParameters);
+ 
+  var context = {};
+
+  context.postData = postParameters;
+  //res.render('home',context);
+
+});
 
 app.get('/',function(req,res){
   res.render('home');

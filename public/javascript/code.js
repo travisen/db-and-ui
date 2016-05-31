@@ -20,22 +20,21 @@ function bindButtons(){
 	/*submit data button*/
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();
-		var payload = {};
+		var payload = {
+			name: null
+		};
 
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
-		console.log(tableRef);
+		//console.log(tableRef);
 		// insert a row in table at last row
 		var newRow = tableRef.insertRow(tableRef.rows.length);
 
 		//insert a cell in the row
 		var newCell = newRow.insertCell(0);
 
-		//var newText = document.createTextNode('sdsadsadsNew row');
-		//newCell.appendChild(newText);
-
-		payload = document.getElementById('ex-name').value;
-		//console.log(payload);
-		req.open("POST", "http://httpbin.org/post", true);
+		payload.name = document.getElementById('ex-name').value;
+		console.log("payload:", payload);
+		req.open("POST", "http://localhost:3009/get-row", true);
 
 		req.setRequestHeader('Content-Type', 'application/json');
 
@@ -43,7 +42,7 @@ function bindButtons(){
 			if(req.status >= 200 && req.status < 400) {
 				var response = JSON.parse(req.responseText);
 				//document.getElementById('')
-				console.log(response);
+				console.log("response:", response);
 				var newText = document.createTextNode(response.data); //this'll be changed when sql is added
 				newCell.appendChild(newText);
 			} else {
@@ -51,7 +50,7 @@ function bindButtons(){
 			}
 		});
 
-	    req.send(payload);
+	    req.send(JSON.stringify(payload));
 	    event.preventDefault();
 	});
 	/*end submit data button*/
