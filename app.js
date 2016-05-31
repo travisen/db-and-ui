@@ -23,12 +23,17 @@ app.post('/get-row',function(req,res){
     postParameters.push({'key':q, 'value':req.body[q]})
   }
   console.log("server data", postParameters);
- 
+
   var context = {};
-
-  context.postData = postParameters;
+  /* figure this out one i can insert values manually
+  mysql.pool.query("INSERT INTO workouts ('name') VALUES (?)", [req.query.c], function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+  }); */
+  //context.postData = postParameters;
   //res.render('home',context);
-
 });
 
 app.get('/',function(req,res){
