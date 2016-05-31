@@ -15,16 +15,22 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// handles data sent from client
+/* Handles Data sent from client and inserts in db */
 app.post('/get-row',function(req,res){
-  //console.log("hello");
+  
   var postParameters = [];
   for(var q in req.body){
     postParameters.push({'key':q, 'value':req.body[q]})
   }
   console.log("server data", postParameters);
 
-  var context = {};
+  var test = {name: "lunges"};
+  mysql.pool.query('INSERT INTO workouts SET ?', test, function(err,res){
+    if(err) throw err;
+
+   // console.log('last insert ID:', res.)
+  });
+
   /* figure this out one i can insert values manually
   mysql.pool.query("INSERT INTO workouts ('name') VALUES (?)", [req.query.c], function(err, result){
     if(err){
@@ -36,6 +42,7 @@ app.post('/get-row',function(req,res){
   //res.render('home',context);
 });
 
+// delete this
 app.get('/',function(req,res){
   res.render('home');
   //document.addEventListener('DOMContentLoaded', bindButtons);
@@ -45,6 +52,7 @@ app.get('/add-ex', function(req,res){
 	res.render('home');
 });
 
+/*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
   var context = {};
   mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
