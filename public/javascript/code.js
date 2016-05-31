@@ -22,9 +22,14 @@ function bindButtons(){
 		var req = new XMLHttpRequest();
 		var payload = {
 			name: null
+			reps: null
+			weight: null
+			date: null
+			lbs: null
 		};
 
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
+
 		//console.log(tableRef);
 		// insert a row in table at last row
 		var newRow = tableRef.insertRow(tableRef.rows.length);
@@ -33,6 +38,11 @@ function bindButtons(){
 		var newCell = newRow.insertCell(0);
 
 		payload.name = document.getElementById('ex-name').value;
+		payload.reps = document.getElementById('ex-date').value;
+		payload.weight = document.getElementById('ex-reps').value;
+		payload.date = document.getElementById('ex-weight').value;
+		payload.lbs = document.getElementById('lbs-true').value;
+
 		console.log("payload:", payload);
 		req.open("POST", "http://localhost:3009/get-row", true);
 

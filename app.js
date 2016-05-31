@@ -23,7 +23,7 @@ app.post('/get-row',function(req,res){
     postParameters.push({'key':q, 'value':req.body[q]})
   }
   console.log("server data", postParameters);
-  // fix date
+  // fix date input. shows as 0000-00-00
   var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
   mysql.pool.query('INSERT INTO workouts SET ?', test, function(err,res){
     if(err) throw err;
