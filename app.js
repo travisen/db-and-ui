@@ -30,29 +30,28 @@ app.post('/get-row',function(req,res){
   //var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
   mysql.pool.query('INSERT INTO workouts SET ?', postParameters, function(err,res){
     if(err) throw err;
-
   });
+  //res.render('home',context);
+});
 
-  /* figure this out one i can insert values manually
-  mysql.pool.query("INSERT INTO workouts ('name') VALUES (?)", [req.query.c], function(err, result){
+app.get('/',function(req,res,next){
+
+  var context = {};
+
+  mysql.pool.query('SELECT * FROM workouts',function(err,rows,fields){
     if(err){
       next(err);
       return;
     }
-  }); */
-  //context.postData = postParameters;
-  //res.render('home',context);
-});
 
-// delete this
-app.get('/',function(req,res){
-  res.render('home');
+    console.log(rows);
+    res.render('home');
+  });
+
+
   //document.addEventListener('DOMContentLoaded', bindButtons);
 });
 
-app.get('/add-ex', function(req,res){
-	res.render('home');
-});
 
 /*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
@@ -66,7 +65,6 @@ app.get('/reset-table',function(req,res,next){
     "date DATE,"+
     "lbs BOOLEAN)";
     mysql.pool.query(createString, function(err){
-      context.results = "Table reset";
       res.render('home',context);
     })
   });
