@@ -21,10 +21,10 @@ function bindButtons(){
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();
 		var payload = {
-			name: null
-			reps: null
-			weight: null
-			date: null
+			name: null,
+			reps: null,
+			weight: null,
+			date: null,
 			lbs: null
 		};
 
@@ -56,7 +56,7 @@ function bindButtons(){
 				var newText = document.createTextNode(response.data); //this'll be changed when sql is added
 				newCell.appendChild(newText);
 			} else {
-				console.log("Error in network request: " + request.statusText);
+				console.log("Error in network request: " + req.statusText);
 			}
 		});
 

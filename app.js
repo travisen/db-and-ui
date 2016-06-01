@@ -17,15 +17,16 @@ app.use(bodyParser.json());
 
 /* Handles Data sent from client and inserts in db */
 app.post('/get-row',function(req,res){
-  
+  //console.log("server data", postParameters);
+
   var postParameters = [];
   for(var q in req.body){
     postParameters.push({'key':q, 'value':req.body[q]})
   }
   console.log("server data", postParameters);
   // fix date input. shows as 0000-00-00
-  var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
-  mysql.pool.query('INSERT INTO workouts SET ?', test, function(err,res){
+  //var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
+  mysql.pool.query('INSERT INTO workouts SET ?', postParameters, function(err,res){
     if(err) throw err;
 
   });
