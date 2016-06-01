@@ -28,6 +28,7 @@ function bindButtons(){
 			lbs: null
 		};
 
+
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
 
 		//console.log(tableRef);
@@ -37,11 +38,19 @@ function bindButtons(){
 		//insert a cell in the row
 		var newCell = newRow.insertCell(0);
 
+		// lbs return true, kg return false
+		if (document.getElementById('lbs-true').value == 'on'){
+			payload.lbs = true;
+		}
+		if (document.getElementById('kgs-true').value == 'on'){
+			payload.lbs = false;
+		};
+
 		payload.name = document.getElementById('ex-name').value;
 		payload.reps = document.getElementById('ex-date').value;
 		payload.weight = document.getElementById('ex-reps').value;
 		payload.date = document.getElementById('ex-weight').value;
-		payload.lbs = document.getElementById('lbs-true').value;
+		payload.lbs;
 
 		console.log("payload:", payload);
 		req.open("POST", "http://localhost:3009/get-row", true);

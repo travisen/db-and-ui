@@ -29,11 +29,11 @@
 			<div class="three columns">
 				<label>Weight Type</label>
 					<label class="weight-type-lbs">
-						<input type="radio"  id="lbs-true">
+						<input type="radio" name="units" id="lbs-true" data-bind="checked:IsChecked, checkedValue: true"/>
 	   		 			<span class="label-body">lbs</span>
 					</label>
 					<label class="weight-type-kgs">
-						<input type="radio"  id="kgs-true">
+						<input type="radio" name="units" id="kgs-true"/>
 						<span class="label-body">kgs</span>
 					</label>
 			</div>
@@ -50,7 +50,8 @@
 				<!--<th>Repetitions</th>
 				<th>Weight</th>
 				<th>Weight Type</th>
-				<th>Date</th>-->
+				<th>Date</th>
+				<th>Units</th>-->
 			</tr>
 		</thead> 
 		<!--Dynamic data starts here -->
