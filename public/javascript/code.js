@@ -44,11 +44,15 @@ function bindButtons(){
 			payload.lbs = false;
 		}
 
+		//removes hyphens and spaces from date
+		var date = payload.date = document.getElementById('ex-date').value;
+		var dateParsed = date.replace(/-|\s/g,"");
+
 		// set values of each property in payload
 		payload.name = document.getElementById('ex-name').value;
 		payload.reps = document.getElementById('ex-reps').value;
 		payload.weight = document.getElementById('ex-weight').value;
-		payload.date = document.getElementById('ex-date').value;
+		payload.date = dateParsed;
 		payload.lbs = document.getElementById('lbs-true').checked;
 
 		console.log("payload:", payload);
