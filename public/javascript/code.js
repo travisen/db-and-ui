@@ -31,15 +31,12 @@ function bindButtons(){
 
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
 
-		//console.log(tableRef);
 		// insert a row in table at last row
 		var newRow = tableRef.insertRow(tableRef.rows.length);
 
 		//insert a cell in the row
 		var newCell = newRow.insertCell(0);
-		console.log("value of lb button", document.getElementById('lbs-true').checked);
-		console.log("value of kg button", document.getElementById('kgs-true').checked);
-
+	
 		// lbs return true, kg return false
 		if (document.getElementById('lbs-true').checked == 'on'){
 			payload.lbs = true;
@@ -49,13 +46,13 @@ function bindButtons(){
 
 		// set values of each property in payload
 		payload.name = document.getElementById('ex-name').value;
-		payload.reps = document.getElementById('ex-date').value;
-		payload.weight = document.getElementById('ex-reps').value;
-		payload.date = document.getElementById('ex-weight').value;
+		payload.reps = document.getElementById('ex-reps').value;
+		payload.weight = document.getElementById('ex-weight').value;
+		payload.date = document.getElementById('ex-date').value;
 		payload.lbs = document.getElementById('lbs-true').checked;
 
 		console.log("payload:", payload);
-		req.open("POST", "http://localhost:3009/get-row", true);
+		req.open("POST", "http://localhost:3009/get-row", true); // on AWS change to 52.36.142.254
 
 		req.setRequestHeader('Content-Type', 'application/json');
 
