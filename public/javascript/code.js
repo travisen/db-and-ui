@@ -37,20 +37,22 @@ function bindButtons(){
 
 		//insert a cell in the row
 		var newCell = newRow.insertCell(0);
+		console.log("value of lb button", document.getElementById('lbs-true').checked);
+		console.log("value of kg button", document.getElementById('kgs-true').checked);
 
 		// lbs return true, kg return false
-		if (document.getElementById('lbs-true').value == 'on'){
+		if (document.getElementById('lbs-true').checked == 'on'){
 			payload.lbs = true;
-		}
-		if (document.getElementById('kgs-true').value == 'on'){
+		} else {
 			payload.lbs = false;
-		};
+		}
 
+		// set values of each property in payload
 		payload.name = document.getElementById('ex-name').value;
 		payload.reps = document.getElementById('ex-date').value;
 		payload.weight = document.getElementById('ex-reps').value;
 		payload.date = document.getElementById('ex-weight').value;
-		payload.lbs;
+		payload.lbs = document.getElementById('lbs-true').checked;
 
 		console.log("payload:", payload);
 		req.open("POST", "http://localhost:3009/get-row", true);
