@@ -42,7 +42,7 @@ app.post('/insert',function(req,res,next){
 
     // save rows in an array
     context.workouts = rows[0];
-    console.log("return data from db", context);    
+    console.log("db sending back to server", context);    
     //res.render('home', context);
     res.send(JSON.stringify(context));
   //});
@@ -68,10 +68,9 @@ app.get('/',function(req,res,next){
 
     // save rows in an array
     context.workouts = rows[0];
-    console.log("return data from db", context);
+    //console.log("return data from db", context);
     
-    res.render('home', context);
-    //res.send(JSON.stringify(rows));
+    res.render('home');
   //});
   //document.addEventListener('DOMContentLoaded', bindButtons);
   });
@@ -87,6 +86,7 @@ app.get('/select-all', function(req,res,next){
     res.send(JSON.stringify(rows));
   });
 });
+
 /*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
   var context = {};

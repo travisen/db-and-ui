@@ -19,13 +19,87 @@ function addElement () {
 function populateTable() {
 		var reqInitial = new XMLHttpRequest();
 		//console.log("hello i'm running");
-		reqInitial.open("POST", "http://localhost:3009/select-all", true); //change address
+		reqInitial.open("GET", "http://localhost:3009/select-all", true); //change address
 		reqInitial.setRequestHeader('Content-Type', 'application/json');
 		reqInitial.addEventListener('load', function(event){
 			if(reqInitial.status >= 200 && reqInitial.status < 400){
 			var responseInitial = JSON.parse(reqInitial.responseText);
 			var workoutObject = responseInitial.workouts;
-			console.log("initial populating", responseInitial.workouts);
+			//console.log("initial populating", responseInitial);
+
+			//populate table initial
+			var workoutObject = responseInitial; // workout server response
+			//console.log(workoutObject);
+			console.log("length of workout object", workoutObject.length);
+
+			console.log("object", workoutObject);
+
+			//for loop test
+			var table = document.getElementById("table-body");
+			for (var i =0; i<workoutObject.length; i++){
+				var isId = true;
+				var newRow = table.insertRow(-1);
+
+				for (var val in workoutObject[i]){
+					console.log(workoutObject[i][val]);
+
+					var newCell = document.createElement('td');
+
+					newCell.textContent = workoutObject[i][val];
+
+					if (workoutObject[i].lbs === "boolean"){
+						console.log("RUNNING");
+						if (workoutObject[i][val] == 1){
+							newCell.textContent = "lbs";
+						}
+					}
+
+					if(isId == true){
+						newCell.style.display="none"
+						isId = false; 
+					}
+					newRow.appendChild(newCell);	
+				}
+				/*
+				console.log("id: "+workoutObject[i].id);
+				console.log("name: "+workoutObject[i].name);
+				console.log("reps: "+workoutObject[i].reps);
+				console.log("weight: "+workoutObject[i].weight);
+				console.log("date: "+workoutObject[i].date);
+				console.log("lbs: "+workoutObject[i].lbs);
+				*/
+			}
+			/*
+			for (var i =0; workoutObject.length; i++){
+				var table = document.getElementById("table-body");
+				var newRow = table.insertRow(-1);
+
+				var cellInsert = document.createElement('td');
+				newRow.appendChild(cellInsert);
+
+			}*/
+			/* Store server obect locally
+			for (var i = 1; workoutObject.length; i++){
+				var table = document.getElementById("table-body");
+				var newRow = table.insertRow(-1);	
+				
+				for (var prop in workoutObject[i]){
+					//console.log(prop + workoutObject[i][prop]);
+					var cellInsert = document.createElement('td');
+					cellInsert.textContent = workoutObject[1][prop];
+					//cellId.style.display="none"
+					newRow.appendChild(cellInsert);
+				}
+			} */
+			/*
+			var table = document.getElementById("table-body");
+			var newRow = table.insertRow(-1);
+			var cellId = document.createElement('td');
+			cellId.textContent = workoutObject.id;
+			cellId.style.display="none"
+			newRow.appendChild(cellId);
+			*/
+
 			} else 
 				console.log("Error in network request: " + reqInitial.statusText);
 		});
@@ -33,6 +107,7 @@ function populateTable() {
 		event.preventDefault();
 		//console.log(reqInitial);
 }
+
 function bindButtons(){
 
 	/*populate table when page loads*/
@@ -81,11 +156,12 @@ function bindButtons(){
 		
 		req.addEventListener('load', function() {
 			if(req.status >= 200 && req.status < 400) {
-				console.log("create req was sent to server");
+
+				console.log("create req was sent to server", workouts);
 
 				var response = JSON.parse(req.responseText);
 				var workoutObject = response.workouts; // workout id
-
+				console.log("adding stuff");
 
 				var table = document.getElementById("table-body");
 				var newRow = table.insertRow(-1); // add row at end of table
