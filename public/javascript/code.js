@@ -5,6 +5,30 @@ document.addEventListener('DOMContentLoaded', bindButtons);
 	popType = 1 populate whole table
 	popType = 2 add one row
  */
+
+ /* delete row function */
+function deleteRow(id) {
+	//var deleteThis = id; // gets sent to server
+	//console.log(deleteThis);
+
+	var payload = {	id };
+	console.log(payload);
+	var deleteRequest = new XMLHttpRequest();
+	
+	deleteRequest.open("POST", "http://localhost:3009/delete-row", true); // change address
+	deleteRequest.setRequestHeader('Content-Type', 'application/json');
+	deleteRequest.addEventListener('load', function(event){
+		if(deleteRequest.status >= 200 && deleteRequest.status < 400){
+			// handle request response
+		} else 
+			console.log("Error in network request: " + deleteRequest.statusText);
+	});
+	deleteRequest.send(JSON.stringify(payload));
+	event.preventDefault();
+};
+/* end delete row function */
+
+
 function populateTable(popType) {
 		var reqInitial = new XMLHttpRequest();
 		reqInitial.open("GET", "http://localhost:3009/select-all", true); //change address
@@ -66,15 +90,18 @@ function populateTable(popType) {
 					var deleteButton = document.createElement('button');
 					deleteButton.class = "button-primary";
 					//deleteButton.style = "marigin-bottom:0rem";
-					deleteButton.id = "delete-button";
+					deleteButton.id = workoutObject[i].id;
 					deleteButton.textContent = "delete";
+					deleteButton.setAttribute("onclick", "deleteRow(this.id)")
 					newRow.appendChild(cellButton.appendChild(deleteButton));
 
 					var cellButton2 = document.createElement('td');
 					var updateButton = document.createElement('button');
 					updateButton.class = "button-primary";
-					updateButton.id = "update-button";
+					updateButton.id = workoutObject[i].id;
 					updateButton.textContent = "update";
+					updateButton.setAttribute("onclick", "console.log('test')")
+
 					newRow.appendChild(cellButton2.appendChild(updateButton));
 				} // end outer loop
 
@@ -141,6 +168,8 @@ function bindButtons(){
 	    event.preventDefault();
 	}); /*end submit data button*/
 	
+
+
    	/* get('http://localhost:3009/select-all', function (data, status){
 		if (status == 'success'){
 			var tableData = JSON.parse(data);

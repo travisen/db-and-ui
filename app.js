@@ -87,9 +87,16 @@ app.get('/select-all', function(req,res,next){
   });
 });
 
-app.get('/delete-row', function(req,res,next ){
-  //var context {};
-  mysql.pool.query('DELETE FROM `workouts` WHERE id =?', [req.query.id], function(err, result){
+app.get('/update-row', function(req,res, next ){
+
+});
+
+app.post('/delete-row', function(req,res,next ){
+
+  //var postParameters = [];
+  //postParameters.push(req.body)
+  console.log("delete row with this id", req.body.id);
+  mysql.pool.query('DELETE FROM `workouts` WHERE id =?', [req.body.id], function(err, result){
     if(err){
       next(err);
       return;
