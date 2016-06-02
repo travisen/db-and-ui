@@ -72,7 +72,7 @@ function bindButtons(){
 				//id
 				var cellId = document.createElement('td');
 				cellId.textContent = workoutObject.id;
-				//cellId.style.display="none"
+				cellId.style.display="none"
 				newRow.appendChild(cellId);
 
 				//ex name
@@ -97,7 +97,13 @@ function bindButtons(){
 
 				//ex units of weight
 				var cellUnits = document.createElement('td');
-				cellUnits.textContent = workoutObject.lbs;
+				//cellUnits.textContent = workoutObject.lbs;
+				if (workoutObject.lbs == 1){
+					cellUnits.textContent = "lbs";
+				} 
+				else {
+					cellUnits.textContent = "kgs";
+				}
 				newRow.appendChild(cellUnits);
 
 
