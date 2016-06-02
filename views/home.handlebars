@@ -3,7 +3,7 @@
 	<h1>Workout Tracker App</h1>
 
 	<h5>Insert New Workout</h5>
-	<form> <!-- change this later -->
+	<form>
 		<div class="row">
 			<div class="eight columns">
 				<label>Exercise Name</label>
@@ -57,7 +57,16 @@
 		</thead> 
 		<!--Dynamic data starts here -->
 		<tbody id="table-body">
-
+		{{#each workouts}}
+		<tr>
+			<td>{{this.id}}</td>
+			<td>{{this.name}}</td>
+			<td>{{this.reps}}</td>
+			<td>{{this.weight}}</td>
+			<td>{{this.lbs}}</td>
+			<td>{{this.date}}</td>
+		</tr>
+		{{/each}}
 		</tbody>
 	</table>
 	<button class="button-primary" style="background-color:#FF4500" id="ex-reset">Reset the table</button>

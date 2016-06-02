@@ -16,27 +16,33 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 /* Handles Data sent from client and inserts in db */
-app.post('/get-row',function(req,res){
+app.post('/insert',function(req,res){
   //console.log("server data", postParameters);
-
+  var context = {};
   var postParameters = [];
 
   //console.log("req body", req.body);
   postParameters.push(req.body)
 
   //JSON.parse(postParameters); data should already be parsed this throws error
-  console.log("server data after parsing!!", postParameters);
+  //console.log("server data after parsing!!", postParameters);
   // fix date input. shows as 0000-00-00
   //var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
-  mysql.pool.query('INSERT INTO workouts SET ?', postParameters, function(err,res){
-    if(err) throw err;
+  mysql.pool.query('INSERT INTO workouts SET ?', postParameters, function(err,result){
+    if(err){
+      next(err);
+      return;
+    }
+    context.workouts = result.id;
+    res.send(JSON.stringify(context));
   });
   //res.render('home',context);
 });
 
 app.get('/',function(req,res,next){
-
+  
   var context = {};
+  var exerciseList = [];
 
   mysql.pool.query('SELECT * FROM workouts',function(err,rows,fields){
     if(err){
@@ -44,15 +50,33 @@ app.get('/',function(req,res,next){
       return;
     }
 
-    console.log(rows);
-    res.render('home');
-  });
-
-
+    // array 
+    for (var val in rows){
+      exerciseList.push({'name': rows[val].name, 'reps': rows[val].reps,
+       'weights': rows[val].weight, 'date': rows[val].date,
+        'lbs': rows[val].lbs, 'id': rows[val].id});
+    }
+    // save rows in an array
+    context.workouts = rows[0];
+    console.log("return data from db", context);
+    
+    res.render('home', context);
+    //res.send(JSON.stringify(rows));
+  //});
   //document.addEventListener('DOMContentLoaded', bindButtons);
+  });
 });
 
-
+// route to select all from table
+app.get('/select-all', function(req,res,next){
+  mysql.pool.query('SELECT * FROM workouts',function(err,rows,fields){
+    if(err){
+      next(err);
+      return;
+    }
+    res.send(JSON.stringify(rows));
+  });
+});
 /*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
   var context = {};

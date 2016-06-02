@@ -27,8 +27,6 @@ function bindButtons(){
 			date: null,
 			lbs: null
 		};
-
-
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
 
 		// insert a row in table at last row
@@ -55,31 +53,50 @@ function bindButtons(){
 		payload.date = dateParsed;
 		payload.lbs = document.getElementById('lbs-true').checked;
 
-		console.log("payload:", payload);
-		req.open("POST", "http://localhost:3009/get-row", true); // on AWS change to 52.36.142.254
+		console.log("payload client side:", payload);
+		req.open("POST", "http://localhost:3009/insert", true); // on AWS change to 52.36.142.254
 
 		req.setRequestHeader('Content-Type', 'application/json');
-
+		
 		req.addEventListener('load', function() {
 			if(req.status >= 200 && req.status < 400) {
+				console.log("create req was sent to server");
+
 				var response = JSON.parse(req.responseText);
+				var id = response.workouts; // workout id
+
+				var table = document.getElementById("table-body");
+				var newRow = table.insertRow(-1); // add row at end of table
+
+				var cellId = document.createElement('td');
+				cellId.textContent = id;
+				//cellId.style.display="none"
+				newRow.appendChild(cellId);
+
+				var cellName = document.createElement('td');
+				cellName.textContent = name;
+				newRow.appendChild(cellId);
+
+				//var response = JSON.parse(req.responseText);
 				//document.getElementById('')
 				console.log("response:", response);
-				var newText = document.createTextNode(response.data); //this'll be changed when sql is added
-				newCell.appendChild(newText);
+				//var newText = document.createTextNode(response.data); //this'll be changed when sql is added
+				//newCell.appendChild(newText);
+
+
 			} else {
 				console.log("Error in network request: " + req.statusText);
 			}
 		});
 	    req.send(JSON.stringify(payload));
 	    event.preventDefault();
-	});
-	/*end submit data button*/
-
-	/* reset table button */
-	document.getElementById("ex-reset").addEventListener('click', function(event){
-
-	});
+	}); /*end submit data button*/
+	
+   	/* get('http://localhost:3009/select-all', function (data, status){
+		if (status == 'success'){
+			var tableData = JSON.parse(data);
+		}
+	});*/
 }
 /*
 Add event listener Example
