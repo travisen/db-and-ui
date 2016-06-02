@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', bindButtons);
+
+//document.addEventListener('DOMContentLoaded', fillTable);
 /* DOM example
 document.body.onload = addElement;
 
@@ -14,8 +16,27 @@ function addElement () {
   document.body.insertBefore(newDiv, currentDiv); 
 }
 */
-
+function populateTable() {
+		var reqInitial = new XMLHttpRequest();
+		//console.log("hello i'm running");
+		reqInitial.open("POST", "http://localhost:3009/select-all", true); //change address
+		reqInitial.setRequestHeader('Content-Type', 'application/json');
+		reqInitial.addEventListener('load', function(event){
+			if(reqInitial.status >= 200 && reqInitial.status < 400){
+			var responseInitial = JSON.parse(reqInitial.responseText);
+			var workoutObject = responseInitial.workouts;
+			console.log("initial populating", responseInitial.workouts);
+			} else 
+				console.log("Error in network request: " + reqInitial.statusText);
+		});
+		reqInitial.send(null);
+		event.preventDefault();
+		//console.log(reqInitial);
+}
 function bindButtons(){
+
+	/*populate table when page loads*/
+	populateTable();
 
 	/*submit data button*/
 	document.getElementById('submit-data').addEventListener('click', function(event){
@@ -106,6 +127,10 @@ function bindButtons(){
 				}
 				newRow.appendChild(cellUnits);
 
+				//deleteButton
+				//var deleteButton = document.createElement('td');
+				//deleteButton.innerHTML = '<input class="button-primary" type="submit" value="Delete" onclick=de>'
+
 
 				//var response = JSON.parse(req.responseText);
 				//document.getElementById('')
@@ -159,4 +184,19 @@ document.getElementById('zipSubmit').addEventListener('click', function(event) {
  req.send(JSON.stringify(payload));
  event.preventDefault();
 })
+
+// save
+
+	document.addEventListener('load', function(event){
+		var reqInitial = new XMLHttpRequest();
+		console.log("hello i'm running");
+		reqInitial.open("POST", "http://localhost:3009/select-all", true); //change address
+		reqInitial.addEventListener('load', function(){
+			var responseInitial = JSON.parse(reqInitial.responseText);
+			var workoutObject = responseInitial.workouts;
+			console.log(responseInitial.workouts);
+		});
+
+		console.log(reqInitial);
+	});
 */

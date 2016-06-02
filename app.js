@@ -60,18 +60,12 @@ app.get('/',function(req,res,next){
   var context = {};
   var exerciseList = [];
 
-  mysql.pool.query('SELECT * FROM workouts',function(err,rows,fields){
+  mysql.pool.query('SELECT * FROM workouts ORDER BY id DESC LIMIT 1',function(err,rows,fields){
     if(err){
       next(err);
       return;
     }
 
-    // array 
-    for (var val in rows){
-      exerciseList.push({'name': rows[val].name, 'reps': rows[val].reps,
-       'weights': rows[val].weight, 'date': rows[val].date,
-        'lbs': rows[val].lbs, 'id': rows[val].id});
-    }
     // save rows in an array
     context.workouts = rows[0];
     console.log("return data from db", context);
