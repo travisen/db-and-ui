@@ -87,6 +87,23 @@ app.get('/select-all', function(req,res,next){
   });
 });
 
+app.get('/delete-row', function(req,res,next ){
+  //var context {};
+  mysql.pool.query('DELETE FROM `workouts` WHERE id =?', [req.query.id], function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    mysql.pool.query('SELECT * FROM `workouts`', function(err, rows, fields){
+      if(err){
+        next(err);
+        return;
+      }
+      res.send(JSON.stringify(rows));
+    });
+  });
+});
+
 /*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
   var context = {};

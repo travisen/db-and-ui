@@ -61,7 +61,21 @@ function populateTable(popType) {
 
 					isUnit++; // keeps track on whether to turn 0 or 1 into lbs or kgs
 					} // end inner loop
+					
+					var cellButton = document.createElement('td');
+					var deleteButton = document.createElement('button');
+					deleteButton.class = "button-primary";
+					//deleteButton.style = "marigin-bottom:0rem";
+					deleteButton.id = "delete-button";
+					deleteButton.textContent = "delete";
+					newRow.appendChild(cellButton.appendChild(deleteButton));
 
+					var cellButton2 = document.createElement('td');
+					var updateButton = document.createElement('button');
+					updateButton.class = "button-primary";
+					updateButton.id = "update-button";
+					updateButton.textContent = "update";
+					newRow.appendChild(cellButton2.appendChild(updateButton));
 				} // end outer loop
 
 			} else 
