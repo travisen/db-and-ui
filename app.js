@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 /* Handles Data sent from client and inserts in db */
-app.post('/insert',function(req,res){
+app.post('/insert',function(req,res,next){
   //console.log("server data", postParameters);
   var context = {};
   var postParameters = [];
@@ -33,8 +33,24 @@ app.post('/insert',function(req,res){
       next(err);
       return;
     }
-    context.workouts = result.id;
+
+  mysql.pool.query('SELECT * FROM workouts ORDER BY id DESC LIMIT 1',function(err,rows,fields){
+    if(err){
+      next(err);
+      return;
+    }
+
+    // save rows in an array
+    context.workouts = rows[0];
+    console.log("return data from db", context);    
+    //res.render('home', context);
     res.send(JSON.stringify(context));
+  //});
+  //document.addEventListener('DOMContentLoaded', bindButtons);
+  });
+   // context.workouts = result;
+   // console.log(result);
+    //res.send(JSON.stringify(context));
   });
   //res.render('home',context);
 });

@@ -63,23 +63,47 @@ function bindButtons(){
 				console.log("create req was sent to server");
 
 				var response = JSON.parse(req.responseText);
-				var id = response.workouts; // workout id
+				var workoutObject = response.workouts; // workout id
+
 
 				var table = document.getElementById("table-body");
 				var newRow = table.insertRow(-1); // add row at end of table
 
+				//id
 				var cellId = document.createElement('td');
-				cellId.textContent = id;
+				cellId.textContent = workoutObject.id;
 				//cellId.style.display="none"
 				newRow.appendChild(cellId);
 
+				//ex name
 				var cellName = document.createElement('td');
-				cellName.textContent = name;
-				newRow.appendChild(cellId);
+				cellName.textContent = workoutObject.name;
+				newRow.appendChild(cellName);
+
+				//ex reps
+				var cellReps = document.createElement('td');
+				cellReps.textContent = workoutObject.reps;
+				newRow.appendChild(cellReps);
+
+				//ex weight
+				var cellWeight = document.createElement('td');
+				cellWeight.textContent = workoutObject.weight;
+				newRow.appendChild(cellWeight);
+
+				//ex date
+				var cellDate = document.createElement('td');
+				cellDate.textContent = workoutObject.date;
+				newRow.appendChild(cellDate);
+
+				//ex units of weight
+				var cellUnits = document.createElement('td');
+				cellUnits.textContent = workoutObject.lbs;
+				newRow.appendChild(cellUnits);
+
 
 				//var response = JSON.parse(req.responseText);
 				//document.getElementById('')
-				console.log("response:", response);
+				console.log("response from server on client", response.workouts);
 				//var newText = document.createTextNode(response.data); //this'll be changed when sql is added
 				//newCell.appendChild(newText);
 
