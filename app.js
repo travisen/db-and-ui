@@ -115,11 +115,11 @@ app.get('/testForm', function(req,res,next){
   res.render('testForm');
 });
 
-app.post('/edit-row', function(req,res,next){
-  console.log("query recieved", req.body);
+app.post('/edit-row', function(request, response){
+  console.log("query recieved", request.body.name);
   var context = {};
-  mysql.pool.query('UPDATE `workouts` SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?', [req.query.name, req.query.reps, req.query.weight,
-    req.query.date, req.query.lbs, req.query.id],
+  mysql.pool.query('UPDATE `workouts` SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?', [request.body.name, request.body.reps, request.body.weight,
+    request.body.date, request.body.lbs, request.body.id],
     function(err,result){
       if(err){
         next(err);
@@ -127,7 +127,7 @@ app.post('/edit-row', function(req,res,next){
       }
       console.log("result", result);
       //context.results = "Update " + result.changedRows + " rows.";
-      res.render('home');
+      response.render('home');
     });
 });
 

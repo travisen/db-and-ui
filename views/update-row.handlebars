@@ -1,27 +1,27 @@
 <div class="container">
 	<h3>Update Exercise<h3>
-	<form action="/edit-row" method="POST">
+	<form action="http://localhost:3009/edit-row" method="POST" enctype='application/json'>
 		<div class="row">
 			<div class="eight columns">
 				<label>Exercise Name</label>
-				<input class="u-full-width" type="text" value="{{this.name}}" id="ex-name">
+				<input name='name' class="u-full-width" type="text" value="{{this.name}}" id="ex-name">
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="eight columns">
 				<label>Date Performed</label>
-				<input class="u-full-width" type="date" value="{{this.date}}" id="ex-date">
+				<input name='date'class="u-full-width" type="date" value="{{this.date}}" id="ex-date">
 			</div>
 		</div>
 		<div class="row">
 			<div class="three columns">
 				<label>Reps</label>
-				<input class="u-full-width" type="number" min="0" step="1" value="{{this.reps}}" id="ex-reps"/>
+				<input name='reps' class="u-full-width" type="number" min="0" step="1" value="{{this.reps}}" id="ex-reps"/>
 			</div>
 			<div class="three columns">
 				<label>Weight</label>
-				<input class="u-full-width" type="number" min="0" step="1" value="{{this.weight}}" id="ex-weight">
+				<input name='weight 'class="u-full-width" type="number" min="0" step="1" value="{{this.weight}}" id="ex-weight">
 			</div>
 			<div class="three columns">
 				<label>Units</label>
@@ -37,7 +37,7 @@
 			<div class="row" style="display:none;">
 				<div class="eight columns">
 					<label>ID</label>
-					<input class="u-full-width" type="text" value="{{this.id}}" id="ex-id">
+					<input name='id' class="u-full-width" type="text" value="{{this.id}}" id="ex-id">
 				</div>
 			</div>
 		</div>
