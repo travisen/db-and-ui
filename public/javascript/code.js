@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', bindButtons);
-document.addEventListener('DOMContentLoaded', populateTable(1));
-
 
 /* Clear table function */
 function clearTable(){
@@ -149,6 +147,8 @@ function populateTable(popType) {
 
 /* binds event listeners to buttons*/
 function bindButtons(){
+
+	document.addEventListener('DOMContentLoaded', populateTable(1));
 
 	/*submit data button*/
 	if (document == null){
