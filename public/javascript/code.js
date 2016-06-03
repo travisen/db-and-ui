@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', bindButtons);
 
+document.addEventListener('DOMContentLoaded', populateTable(1));
+
+
 /* Clear table function */
 function clearTable(){
 	var parent = document.getElementById('ex-table');
@@ -17,7 +20,8 @@ function clearTable(){
 function deleteRow(id) {
 	//var deleteThis = id; // gets sent to server
 	//console.log(deleteThis);
-
+	var row = document.getElementById(id);
+	row.parentNode.removeChild(row);
 	var payload = {	id };
 	//console.log(payload);
 	var deleteRequest = new XMLHttpRequest();
@@ -26,30 +30,13 @@ function deleteRow(id) {
 	deleteRequest.setRequestHeader('Content-Type', 'application/json');
 	deleteRequest.addEventListener('load', function(event){
 		//clearTable();
-		populateTable(1);
+		//populateTable(1);
+
 	});
 	deleteRequest.send(JSON.stringify(payload));
 	event.preventDefault();
 };
 /* end delete row function */
-/*
-function updateRow(id){
-	var payload = {	id };
-	//console.log(payload);
-	var deleteRequest = new XMLHttpRequest();
-	
-	deleteRequest.open("GET", "http://localhost:3009/update-row?id="+payload.id, true); // change address
-	deleteRequest.setRequestHeader('Content-Type', 'application/json');
-	deleteRequest.addEventListener('load', function(event){
-		//clearTable();
-		//populateTable(1);
-	});
-	deleteRequest.send(null);
-	//deleteRequest.send(JSON.stringify(payload));
-	console.log("update payload", payload);
-	event.preventDefault();
-};
-*/
 /*
 	Populates table and checks for errors
 	popType = 1 populate whole table
@@ -88,6 +75,7 @@ function populateTable(popType) {
 				var isId = true;
 				var isUnit = 1;
 				var newRow = table.insertRow(0);
+				newRow.id = workoutObject[i].id;
 				//console.log("should run just once");
 				for (var val in workoutObject[i]){
 					console.log(workoutObject[i][val]);
@@ -148,14 +136,12 @@ function populateTable(popType) {
 /* binds event listeners to buttons*/
 function bindButtons(){
 
-	document.addEventListener('DOMContentLoaded', populateTable(1));
-
 	/*submit data button*/
 	if (document == null){
 		console.log("document is null");
 	}
 	if (document.getElementById('submit-data') == null){
-		console.log("submit-data is null");
+		//console.log("submit-data is null");
 	}
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();

@@ -34,10 +34,10 @@ app.post('/insert',function(req,res,next){
       return;
     }
 
-  mysql.pool.query('SELECT * FROM workouts ORDER BY id DESC LIMIT 1',function(err,rows,fields){
+  mysql.pool.query('SELECT * FROM workouts ORDER BY id ASC LIMIT 1',function(err,rows,fields){
     if(err){
       next(err);
-      return;
+      return;    
     }
 
     // save rows in an array
@@ -90,22 +90,7 @@ app.get('/select-all', function(req,res,next){
     res.send(JSON.stringify(rows));
   });
 });
-/*
-app.post('/update', function(req,res,next){
-  console.log("get exercise with this id", req.body.id)
-  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.body.id],
-    function(err,rows,fields){
-      if(err){
-        next(err);
-        return;
-      }
-      context = rows[0];
-      console.log("returned data from update", context);
-      //res.render('update', context);
-      res.render('update');
-    })
-});
-*/
+
 app.get('/update-row', function(req,res,next){
 
   var context = {};
@@ -126,6 +111,26 @@ app.get('/update-row', function(req,res,next){
     })
 });
 
+app.get('/testForm', function(req,res,next){
+  res.render('testForm');
+});
+
+app.post('/edit-row', function(req,res,next){
+  console.log("query recieved", req.body);
+  var context = {};
+  mysql.pool.query('UPDATE `workouts` SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?', [req.query.name, req.query.reps, req.query.weight,
+    req.query.date, req.query.lbs, req.query.id],
+    function(err,result){
+      if(err){
+        next(err);
+        return;
+      }
+      console.log("result", result);
+      //context.results = "Update " + result.changedRows + " rows.";
+      res.render('home');
+    });
+});
+
 app.post('/delete-row', function(req,res,next ){
 
   //var postParameters = [];
@@ -142,7 +147,7 @@ app.post('/delete-row', function(req,res,next ){
         return;
       }
       console.log("after deletion", rows);
-      res.send(JSON.stringify(rows));
+      //res.send(JSON.stringify(rows));
     });
   });
 });
