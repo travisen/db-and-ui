@@ -40,14 +40,16 @@ function updateRow(id){
 	//console.log(payload);
 	var deleteRequest = new XMLHttpRequest();
 	
-	deleteRequest.open("POST", "http://localhost:3009/update-row", true); // change address
+	deleteRequest.open("GET", "http://localhost:3009/update-row?id="+payload.id, true); // change address
 	deleteRequest.setRequestHeader('Content-Type', 'application/json');
 	deleteRequest.addEventListener('load', function(event){
 		//clearTable();
 		//populateTable(1);
 	});
-	deleteRequest.send(JSON.stringify(payload));
-	//event.preventDefault();
+	deleteRequest.send(null);
+	//deleteRequest.send(JSON.stringify(payload));
+	console.log("update payload", payload);
+	event.preventDefault();
 };
 /*
 	Populates table and checks for errors

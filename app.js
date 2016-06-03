@@ -106,9 +106,11 @@ app.post('/update', function(req,res,next){
     })
 });
 */
-app.get('/update-row', function(req,res,next ){
-  console.log("get exercise with this id", req.body.id)
-  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.body.id],
+app.get('/update-row', function(req,res,next){
+  var context = {};
+  console.log(req.query);
+  console.log("get exercise with this id", req.query)
+  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.query],
     function(err,rows,fields){
       if(err){
         next(err);
