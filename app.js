@@ -55,6 +55,7 @@ app.post('/insert',function(req,res,next){
   //res.render('home',context);
 });
 
+
 app.get('/',function(req,res,next){
   
   var context = {};
@@ -87,8 +88,19 @@ app.get('/select-all', function(req,res,next){
   });
 });
 
-app.get('/update-row', function(req,res, next ){
-
+app.post('/update-row', function(req,res,next){
+  
+  console.log("get exercise with this id", req.body.id)
+  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.body.id],
+    function(err,rows,fields){
+      if(err){
+        next(err);
+        return;
+      }
+      context = rows[0];
+      console.log("returned data from update-row", context);
+      res.render('update-row', context);
+    })
 });
 
 app.post('/delete-row', function(req,res,next ){
@@ -106,6 +118,7 @@ app.post('/delete-row', function(req,res,next ){
         next(err);
         return;
       }
+      console.log("after deletion", rows);
       res.send(JSON.stringify(rows));
     });
   });

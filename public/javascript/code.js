@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', bindButtons);
+document.addEventListener('DOMContentLoaded', populateTable(1));
 
-/*
-	Populates table and checks for errors
-	popType = 1 populate whole table
-	popType = 2 add one row
- */
+
+/* Clear table function */
+function clearTable(){
+	var parent = document.getElementById('ex-table');
+	var child = document.getElementById('table-body');
+	parent.removeChild(child);
+
+	// re-add table body
+	newTableBody = document.createElement('tbody')
+	newTableBody.id = "table-body";
+	parent.appendChild(newTableBody);
+} /* end clear table function */
+
 
  /* delete row function */
 function deleteRow(id) {
@@ -12,23 +21,39 @@ function deleteRow(id) {
 	//console.log(deleteThis);
 
 	var payload = {	id };
-	console.log(payload);
+	//console.log(payload);
 	var deleteRequest = new XMLHttpRequest();
 	
 	deleteRequest.open("POST", "http://localhost:3009/delete-row", true); // change address
 	deleteRequest.setRequestHeader('Content-Type', 'application/json');
 	deleteRequest.addEventListener('load', function(event){
-		if(deleteRequest.status >= 200 && deleteRequest.status < 400){
-			// handle request response
-		} else 
-			console.log("Error in network request: " + deleteRequest.statusText);
+		//clearTable();
+		populateTable(1);
 	});
 	deleteRequest.send(JSON.stringify(payload));
 	event.preventDefault();
 };
 /* end delete row function */
 
-
+function updateRow(id){
+	var payload = {	id };
+	//console.log(payload);
+	var deleteRequest = new XMLHttpRequest();
+	
+	deleteRequest.open("POST", "http://localhost:3009/update-row", true); // change address
+	deleteRequest.setRequestHeader('Content-Type', 'application/json');
+	deleteRequest.addEventListener('load', function(event){
+		//clearTable();
+		//populateTable(1);
+	});
+	deleteRequest.send(JSON.stringify(payload));
+	event.preventDefault();
+};
+/*
+	Populates table and checks for errors
+	popType = 1 populate whole table
+	popType = 2 add one row
+*/
 function populateTable(popType) {
 		var reqInitial = new XMLHttpRequest();
 		reqInitial.open("GET", "http://localhost:3009/select-all", true); //change address
@@ -44,11 +69,11 @@ function populateTable(popType) {
 			//console.log(workoutObject);
 			console.log("length of workout object", workoutObject.length);
 
-			console.log("object", workoutObject);
+			console.log("objects inside", workoutObject);
 
 			if (popType == 1) {
 			var start = 0;
-			console.log("poptype 1");
+			//console.log("poptype 1");
 			}
 			else if (popType == 2) {
 			var start = workoutObject.length - 1;
@@ -62,9 +87,9 @@ function populateTable(popType) {
 				var isId = true;
 				var isUnit = 1;
 				var newRow = table.insertRow(0);
-				console.log("should run just once");
+				//console.log("should run just once");
 				for (var val in workoutObject[i]){
-					//console.log(workoutObject[i][val]);
+					console.log(workoutObject[i][val]);
 
 					var newCell = document.createElement('td');
 
@@ -100,8 +125,10 @@ function populateTable(popType) {
 					updateButton.class = "button-primary";
 					updateButton.id = workoutObject[i].id;
 					updateButton.textContent = "update";
-					updateButton.setAttribute("onclick", "console.log('test')")
-
+					//updateButton.href = "http://localhost.com/update-row/update-row?id="+updateButton.id;
+					updateButton.setAttribute("onclick", "updateRow(this.id)");
+					// <a href="update-row?id={{this.id}}">
+					// or updateButton.href = "/edit-entry?id="+updateButton.id
 					newRow.appendChild(cellButton2.appendChild(updateButton));
 				} // end outer loop
 
@@ -109,15 +136,13 @@ function populateTable(popType) {
 				console.log("Error in network request: " + reqInitial.statusText);
 		});
 		reqInitial.send(null);
-		event.preventDefault();
+		//event.preventDefault();
 		//console.log(reqInitial);
 }
 /* end populate table function */
 
 /* binds event listeners to buttons*/
 function bindButtons(){
-
-	populateTable(1);
 
 	/*submit data button*/
 	document.getElementById('submit-data').addEventListener('click', function(event){
