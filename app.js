@@ -55,6 +55,9 @@ app.post('/insert',function(req,res,next){
   //res.render('home',context);
 });
 
+app.get('/test', function(req,res,next){
+  res.render('test');
+});
 
 app.get('/',function(req,res,next){
   
@@ -87,9 +90,8 @@ app.get('/select-all', function(req,res,next){
     res.send(JSON.stringify(rows));
   });
 });
-
-app.post('/update-row', function(req,res,next){
-  
+/*
+app.post('/update', function(req,res,next){
   console.log("get exercise with this id", req.body.id)
   mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.body.id],
     function(err,rows,fields){
@@ -98,7 +100,23 @@ app.post('/update-row', function(req,res,next){
         return;
       }
       context = rows[0];
-      console.log("returned data from update-row", context);
+      console.log("returned data from update", context);
+      //res.render('update', context);
+      res.render('update');
+    })
+});
+*/
+app.get('/update-row', function(req,res,next ){
+  console.log("get exercise with this id", req.body.id)
+  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.body.id],
+    function(err,rows,fields){
+      if(err){
+        next(err);
+        return;
+      }
+      context = rows[0];
+      console.log("returned data from update2", context);
+      //res.render('update', context);
       res.render('update-row', context);
     })
 });

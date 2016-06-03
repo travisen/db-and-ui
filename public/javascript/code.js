@@ -47,7 +47,7 @@ function updateRow(id){
 		//populateTable(1);
 	});
 	deleteRequest.send(JSON.stringify(payload));
-	event.preventDefault();
+	//event.preventDefault();
 };
 /*
 	Populates table and checks for errors
@@ -125,7 +125,7 @@ function populateTable(popType) {
 					updateButton.class = "button-primary";
 					updateButton.id = workoutObject[i].id;
 					updateButton.textContent = "update";
-					//updateButton.href = "http://localhost.com/update-row/update-row?id="+updateButton.id;
+					//updateButton.href = "http://localhost.com/update-row/update-rowid="+updateButton.id;
 					updateButton.setAttribute("onclick", "updateRow(this.id)");
 					// <a href="update-row?id={{this.id}}">
 					// or updateButton.href = "/edit-entry?id="+updateButton.id
@@ -145,6 +145,12 @@ function populateTable(popType) {
 function bindButtons(){
 
 	/*submit data button*/
+	if (document == null){
+		console.log("document is null");
+	}
+	if (document.getElementById('submit-data') == null){
+		console.log("submit-data is null");
+	}
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();
 		var payload = {
@@ -192,12 +198,4 @@ function bindButtons(){
 	    req.send(JSON.stringify(payload));
 	    event.preventDefault();
 	}); /*end submit data button*/
-	
-
-
-   	/* get('http://localhost:3009/select-all', function (data, status){
-		if (status == 'success'){
-			var tableData = JSON.parse(data);
-		}
-	});*/
 }
