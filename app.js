@@ -107,7 +107,9 @@ app.post('/update', function(req,res,next){
 });
 */
 app.get('/update-row', function(req,res,next){
+
   var context = {};
+  
   console.log(req.query);
   console.log("get exercise with this id", req.query)
   mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.query],
@@ -116,6 +118,7 @@ app.get('/update-row', function(req,res,next){
         next(err);
         return;
       }
+      console.log("current row", rows[0]);
       context = rows[0];
       console.log("returned data from update2", context);
       //res.render('update', context);

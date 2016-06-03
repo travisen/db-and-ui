@@ -34,7 +34,7 @@ function deleteRow(id) {
 	event.preventDefault();
 };
 /* end delete row function */
-
+/*
 function updateRow(id){
 	var payload = {	id };
 	//console.log(payload);
@@ -51,6 +51,7 @@ function updateRow(id){
 	console.log("update payload", payload);
 	event.preventDefault();
 };
+*/
 /*
 	Populates table and checks for errors
 	popType = 1 populate whole table
@@ -127,8 +128,11 @@ function populateTable(popType) {
 					updateButton.class = "button-primary";
 					updateButton.id = workoutObject[i].id;
 					updateButton.textContent = "update";
+					updateButton.action
 					//updateButton.href = "http://localhost.com/update-row/update-rowid="+updateButton.id;
-					updateButton.setAttribute("onclick", "updateRow(this.id)");
+					//updateButton.setAttribute("onclick", "updateRow(this.id)");
+					updateButton.setAttribute("onclick", "window.location='update-row?id='+this.id;");
+
 					// <a href="update-row?id={{this.id}}">
 					// or updateButton.href = "/edit-entry?id="+updateButton.id
 					newRow.appendChild(cellButton2.appendChild(updateButton));
