@@ -63,7 +63,7 @@ app.get('/',function(req,res,next){
   
   var context = {};
   var exerciseList = [];
-
+  // see if this is messing things up later..
   mysql.pool.query('SELECT * FROM workouts ORDER BY id DESC LIMIT 1',function(err,rows,fields){
     if(err){
       next(err);
@@ -109,10 +109,10 @@ app.post('/update', function(req,res,next){
 app.get('/update-row', function(req,res,next){
 
   var context = {};
-  
-  console.log(req.query);
-  console.log("get exercise with this id", req.query)
-  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.query],
+
+  console.log(req.query.id);
+  console.log("get exercise with this id", req.query.id)
+  mysql.pool.query('SELECT * FROM workouts WHERE id=?', [req.query.id],
     function(err,rows,fields){
       if(err){
         next(err);
