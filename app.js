@@ -17,46 +17,29 @@ app.use(bodyParser.json());
 
 /* Handles Data sent from client and inserts in db */
 app.post('/insert',function(req,res,next){
-  //console.log("server data", postParameters);
   var context = {};
   var postParameters = [];
 
-  //console.log("req body", req.body);
   postParameters.push(req.body)
 
-  //JSON.parse(postParameters); data should already be parsed this throws error
-  //console.log("server data after parsing!!", postParameters);
-  // fix date input. shows as 0000-00-00
-  //var test = {name: "lunges", reps: "12", weight: "1000", date: 2016-05-30, lbs: true};
   mysql.pool.query('INSERT INTO workouts SET ?', postParameters, function(err,result){
     if(err){
       next(err);
       return;
     }
 
-  mysql.pool.query('SELECT * FROM workouts ORDER BY id ASC LIMIT 1',function(err,rows,fields){
-    if(err){
-      next(err);
-      return;    
-    }
+    mysql.pool.query('SELECT * FROM workouts ORDER BY id ASC LIMIT 1',function(err,rows,fields){
+      if(err){
+        next(err);
+        return;    
+      }
 
-    // save rows in an array
-    context.workouts = rows[0];
-    console.log("db sending back to server", context);    
-    //res.render('home', context);
-    res.send(JSON.stringify(context));
-  //});
-  //document.addEventListener('DOMContentLoaded', bindButtons);
+      // save rows in an array
+      context.workouts = rows[0];
+      console.log("db sending back to server", context);
+      res.send(JSON.stringify(context));
+    });
   });
-   // context.workouts = result;
-   // console.log(result);
-    //res.send(JSON.stringify(context));
-  });
-  //res.render('home',context);
-});
-
-app.get('/test', function(req,res,next){
-  res.render('test');
 });
 
 app.get('/',function(req,res,next){
@@ -71,12 +54,8 @@ app.get('/',function(req,res,next){
     }
 
     // save rows in an array
-    context.workouts = rows[0];
-    //console.log("return data from db", context);
-    
+    context.workouts = rows[0];    
     res.render('home');
-  //});
-  //document.addEventListener('DOMContentLoaded', bindButtons);
   });
 });
 
@@ -133,8 +112,6 @@ app.post('/edit-row', function(request, response){
 
 app.post('/delete-row', function(req,res,next ){
 
-  //var postParameters = [];
-  //postParameters.push(req.body)
   console.log("delete row with this id", req.body.id);
   mysql.pool.query('DELETE FROM `workouts` WHERE id =?', [req.body.id], function(err, result){
     if(err){
@@ -147,7 +124,6 @@ app.post('/delete-row', function(req,res,next ){
         return;
       }
       console.log("after deletion", rows);
-      //res.send(JSON.stringify(rows));
     });
   });
 });
@@ -155,7 +131,8 @@ app.post('/delete-row', function(req,res,next ){
 /*Link to easily reset table*/
 app.get('/reset-table',function(req,res,next){
   var context = {};
-  mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ //replace your connection pool with the your variable containing the connection pool
+  //replace your connection pool with the your variable containing the connection pool
+  mysql.pool.query("DROP TABLE IF EXISTS workouts", function(err){ 
     var createString = "CREATE TABLE workouts("+
     "id INT PRIMARY KEY AUTO_INCREMENT,"+
     "name VARCHAR(255) NOT NULL,"+
