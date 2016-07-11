@@ -18,20 +18,17 @@ function clearTable(){
 
  /* delete row function */
 function deleteRow(id) {
-	//var deleteThis = id; // gets sent to server
-	//console.log(deleteThis);
+
 	var row = document.getElementById(id);
 	row.parentNode.removeChild(row);
 	var payload = {	id };
-	//console.log(payload);
+
 	var deleteRequest = new XMLHttpRequest();
 	
 	deleteRequest.open("POST", "http://localhost:3009/delete-row", true); // change address
 	deleteRequest.setRequestHeader('Content-Type', 'application/json');
 	deleteRequest.addEventListener('load', function(event){
-		//clearTable();
-		//populateTable(1);
-
+		// does this even do anything?
 	});
 	deleteRequest.send(JSON.stringify(payload));
 	event.preventDefault();
@@ -50,18 +47,15 @@ function populateTable(popType) {
 			if(reqInitial.status >= 200 && reqInitial.status < 400){
 			var responseInitial = JSON.parse(reqInitial.responseText);
 			var workoutObject = responseInitial.workouts;
-			//console.log("initial populating", responseInitial);
 
 			//populate table initial
 			var workoutObject = responseInitial; // workout server response
-			//console.log(workoutObject);
 			console.log("length of workout object", workoutObject.length);
 
 			console.log("objects inside", workoutObject);
 
 			if (popType == 1) {
 			var start = 0;
-			//console.log("poptype 1");
 			}
 			else if (popType == 2) {
 			var start = workoutObject.length - 1;
@@ -76,7 +70,6 @@ function populateTable(popType) {
 				var isUnit = 1;
 				var newRow = table.insertRow(0);
 				newRow.id = workoutObject[i].id;
-				//console.log("should run just once");
 				for (var val in workoutObject[i]){
 					console.log(workoutObject[i][val]);
 
@@ -115,12 +108,8 @@ function populateTable(popType) {
 					updateButton.id = workoutObject[i].id;
 					updateButton.textContent = "update";
 					updateButton.action
-					//updateButton.href = "http://localhost.com/update-row/update-rowid="+updateButton.id;
-					//updateButton.setAttribute("onclick", "updateRow(this.id)");
 					updateButton.setAttribute("onclick", "window.location='update-row?id='+this.id;");
 
-					// <a href="update-row?id={{this.id}}">
-					// or updateButton.href = "/edit-entry?id="+updateButton.id
 					newRow.appendChild(cellButton2.appendChild(updateButton));
 				} // end outer loop
 
@@ -128,8 +117,6 @@ function populateTable(popType) {
 				console.log("Error in network request: " + reqInitial.statusText);
 		});
 		reqInitial.send(null);
-		//event.preventDefault();
-		//console.log(reqInitial);
 }
 /* end populate table function */
 

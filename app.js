@@ -85,7 +85,6 @@ app.get('/update-row', function(req,res,next){
       console.log("current row", rows[0]);
       context = rows[0];
       console.log("returned data from update2", context);
-      //res.render('update', context);
       res.render('update-row', context);
     })
 });
@@ -105,7 +104,6 @@ app.post('/edit-row', function(request, response){
         return;
       }
       console.log("result", result);
-      //context.results = "Update " + result.changedRows + " rows.";
       response.render('home');
     });
 });
