@@ -2,27 +2,19 @@ document.addEventListener('DOMContentLoaded', bindButtons);
 
 document.addEventListener('DOMContentLoaded', populateTable(1));
 
-
-/* Clear table function */
-function clearTable(){
-	var parent = document.getElementById('ex-table');
-	var child = document.getElementById('table-body');
-	parent.removeChild(child);
-
-	// re-add table body
-	newTableBody = document.createElement('tbody')
-	newTableBody.id = "table-body";
-	parent.appendChild(newTableBody);
-} /* end clear table function */
-
-
  /* delete row function */
 function deleteRow(id) {
+	
 
+	console.log("delete id at: ", id);
 	var row = document.getElementById(id);
+	console.log("row: ", row.nodeName);
+	//rowActual = row.parentNode.nodeName;
+	//console.log("rowActual: ", rowActual);
 	row.parentNode.removeChild(row);
 	var payload = {	id };
-
+	
+	
 	var deleteRequest = new XMLHttpRequest();
 	
 	deleteRequest.open("POST", "http://localhost:3009/delete-row", true); // change address
@@ -30,9 +22,11 @@ function deleteRow(id) {
 	deleteRequest.addEventListener('load', function(event){
 		// does this even do anything?
 	});
+
 	deleteRequest.send(JSON.stringify(payload));
 	event.preventDefault();
 };
+
 /* end delete row function */
 /*
 	Populates table and checks for errors
@@ -63,13 +57,26 @@ function populateTable(popType) {
 			console.log("poptype 2", workoutObject[start]);
 			console.log("new length", workoutObject.length);
 			}
+
+			// Reference variable for the entire table.
+			var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
+
+			//debuggin
+			var count =0;
+
 			//loop to populate table
 			var table = document.getElementById("table-body");
 			for (var i = start; i<workoutObject.length; i++){
 				var isId = true;
 				var isUnit = 1;
-				var newRow = table.insertRow(0);
-				newRow.id = workoutObject[i].id;
+
+				if(workoutObject.length > 0){
+					// Insert a row in tableRef at last row.
+					var newRow = tableRef.insertRow(tableRef.rows.length);
+					newRow.id = workoutObject[i].id;
+
+				}
+
 				for (var val in workoutObject[i]){
 					console.log(workoutObject[i][val]);
 
@@ -127,9 +134,7 @@ function bindButtons(){
 	if (document == null){
 		console.log("document is null");
 	}
-	if (document.getElementById('submit-data') == null){
-		//console.log("submit-data is null");
-	}
+
 	document.getElementById('submit-data').addEventListener('click', function(event){
 		var req = new XMLHttpRequest();
 		var payload = {
@@ -142,10 +147,10 @@ function bindButtons(){
 		var tableRef = document.getElementById("ex-table").getElementsByTagName("tbody")[0];
 
 		// insert a row in table at last row
-		var newRow = tableRef.insertRow(tableRef.rows.length);
+		//var newRow = tableRef.insertRow(tableRef.rows.length);
 
 		//insert a cell in the row
-		var newCell = newRow.insertCell(0);
+		//var newCell = newRow.insertCell(0);
 	
 		// lbs return true, kg return false
 		if (document.getElementById('lbs-true').checked == 'on'){
@@ -165,7 +170,6 @@ function bindButtons(){
 		payload.date = dateParsed;
 		payload.lbs = document.getElementById('lbs-true').checked;
 
-		console.log("payload client side:", payload);
 		req.open("POST", "http://localhost:3009/insert", true); // on AWS change to 52.36.142.254
 
 		req.setRequestHeader('Content-Type', 'application/json');
